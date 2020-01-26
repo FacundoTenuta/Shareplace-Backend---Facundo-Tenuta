@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->string('description');
+            $table->string('description')->nullable();
         });
 
         // Schema::table('users', function ($table) {

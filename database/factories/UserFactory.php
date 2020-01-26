@@ -33,7 +33,7 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => Hash::make('123456'), // password
         'remember_token' => Str::random(10),
         // 'image' => $faker -> imageUrl($width = 640, $height = 480),
-        'image' => 'perfilGenerico.png',
+        'image' => 'DefaultAvatar.png',
         'description' => $faker->text($maxNbChars = 30),
     ];
 });

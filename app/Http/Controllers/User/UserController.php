@@ -69,6 +69,7 @@ class UserController extends ApiController
         $usuario->birthDate = $request->birthDate;
         $usuario->admin = false;
         $usuario->enabled = true;
+        $usuario->description = $request->description;
 
         $usuario->save();
 
