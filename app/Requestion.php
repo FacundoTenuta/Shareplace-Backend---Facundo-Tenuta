@@ -12,6 +12,10 @@ class Requestion extends Model
     'untilDate',
     'reason',
     'state',
+    'active',
+    'isLoan',
+    'startDate',
+    'endDate',
     'publication_id',
     'requester_id',
     ];

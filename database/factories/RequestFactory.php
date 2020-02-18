@@ -4,6 +4,7 @@
 
 use App\Requestion;
 use App\User;
+use Carbon\Carbon;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -24,7 +25,10 @@ $factory->define(Requestion::class, function (Faker $faker) {
         'reason' => $faker->text($maxNbChars = 10),       
         'fromDate' => $date,
         'untilDate' => $date2,
-        'state' => 'activo',
+        'active' => true,
+        'isLoan' => true,
+        'startDate' => new Carbon(null),
+        'endDate' => new Carbon(null),
         // 'publication_id' => factory(Publication::class())->create()->id;
         'publication_id' => $prestador->publications->random()->id,
         // 'requester_id' => factory(User::class())->create()->id;

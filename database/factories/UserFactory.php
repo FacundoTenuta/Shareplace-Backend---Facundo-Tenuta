@@ -24,6 +24,7 @@ $factory->define(User::class, function (Faker $faker) {
         'name' => $faker->name,
         'lastName' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
+        'phone' => $faker->unique()->numberBetween($min = 2901000000, $max = 2901999999),
         'dni' => $faker->unique()->numberBetween($min = 12345678, $max = 40000000),
         
         'birthDate' => $date,

@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,10 +18,13 @@ class CreateRequestionsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('title');
-            $table->date('fromDate');
-            $table->date('untilDate');
+            $table->date('fromDate')->nullable()->default(new Carbon(null));
+            $table->date('untilDate')->nullable()->default(new Carbon(null));
             $table->string('reason');
-            $table->string('state');
+            $table->boolean('active');
+            $table->boolean('isLoan');
+            $table->date('startDate')->nullable()->default(new Carbon(null));
+            $table->date('endDate')->nullable()->default(new Carbon(null));
             $table->unsignedBigInteger('publication_id');
             $table->unsignedBigInteger('requester_id');
 
@@ -36,6 +40,6 @@ class CreateRequestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requests');
+        Schema::dropIfExists('requestions');
     }
 }

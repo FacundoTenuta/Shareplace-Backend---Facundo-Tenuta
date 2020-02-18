@@ -5,7 +5,6 @@ use App\Category;
 use App\Condition;
 use App\Image;
 use App\Link;
-use App\Loan;
 use App\Publication;
 use App\Requestion;
 use App\User;
@@ -42,7 +41,7 @@ class DatabaseSeeder extends Seeder
 
         factory(Condition::class, 30)->create();
 
-        factory(Publication::class, 11)->create()->each(
+        factory(Publication::class, 200)->create()->each(
             function ($publication){
                 $conditions = Condition::all()->random();
                 $categories = Category::all()->random();
@@ -52,9 +51,7 @@ class DatabaseSeeder extends Seeder
             }
         );
 
-        factory(Requestion::class, 6)->create();
-
-        factory(Loan::class, 5)->create();
+        factory(Requestion::class, 30)->create();
         
         factory(Image::class, 20)->create();
 

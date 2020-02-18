@@ -30,7 +30,7 @@ class PublicationController extends ApiController
      */
     public function index()
     {
-        $publications = Publication::with('images', 'conditions', 'categories')->get();
+        $publications = Publication::where('state', true)->with('images', 'conditions', 'categories')->orderBy('created_at', 'desc')->get();
         return $this->showAll($publications);
     }
 
@@ -80,7 +80,7 @@ class PublicationController extends ApiController
             $publication->description = $request->description;
             $publication->user_id = $request->user_id;
             $publication->createDate = Carbon::now();
-            $publication->state = 'disponible';
+            $publication->state = true;
 
             if($request->has('principalImage')){
                 $publication->principalImage = $request->file('principalImage')->store('', 'images');
@@ -162,7 +162,7 @@ class PublicationController extends ApiController
      */
     public function show(Publication $publication)
     {
-        $publication = $publication->fresh('images', 'conditions');
+        $publication = $publication->fresh('images', 'conditions', 'categories');
         return $this->showOne($publication);
     }
 
@@ -187,35 +187,50 @@ class PublicationController extends ApiController
     public function update(Request $request, Publication $publication)
     {
 
-        $reglas = [
-            'title' => 'required',
-            'description' => 'required',
-            'user_id' => 'required',
+        // $reglas = [
+            // 'title' => 'required',
+            // 'description' => 'required',
+            // 'user_id' => 'required',
             // 'images' => 'required',
             // 'conditions' => 'required',
-        ];
+        // ];
 
-        $this->validate($request, $reglas);
+        // $this->validate($request, $reglas);
 
         DB::beginTransaction();
         try{
-            $publication->title = $request->title;
-            $publication->description = $request->description;
-            $publication->state = 'disponible';
+
+            if($request->has('title')){
+                $publication->title = $request->title;
+            }
+            if($request->has('description')){
+                $publication->description = $request->description;
+            }
+            if($request->has('state')){
+                $publication->state = $request->state;
+            }
 
 
-            $publication->save();
+            if($request->has('deletedImages')){
+                $images_ids = $request->deletedImages;
+
+                for ($i=0; $i < count($images_ids); $i++) { 
+                    Image::find($images_ids[$i])->delete();
+                }
+            }
 
             if($request->has('principalImage')){
                 $publication->principalImage = $request->file('principalImage')->store('', 'images');
             }
 
+            $publication->save();
 
-            foreach ($publication->images as $image) {
-                    Storage::disk('images')->delete($image->path);
-                };
 
-            $publication->images()->delete();
+            // foreach ($publication->images as $image) {
+            //         Storage::disk('images')->delete($image->path);
+            //     };
+
+            // $publication->images()->delete();
 
             
 
@@ -278,7 +293,9 @@ class PublicationController extends ApiController
                     $publication->conditions()->sync($condition_ids);
                 }
             }else{
-                $publication->conditions()->detach();
+                if (!$request->has('state')) {
+                    $publication->conditions()->detach();
+                }
             }
             
 
@@ -290,7 +307,7 @@ class PublicationController extends ApiController
             DB::commit();
 
 
-            $publication = $publication->fresh('images', 'conditions');
+            $publication = $publication->fresh('images', 'conditions', 'categories');
             return $this->showOne($publication);
         }catch (\Exception $e){
             DB::rollback();
@@ -321,6 +338,7 @@ class PublicationController extends ApiController
 
             $publication->images()->delete();
             $publication->conditions()->detach();
+            $publication->categories()->detach();
             $publication->delete();
 
             DB::commit();
@@ -333,5 +351,26 @@ class PublicationController extends ApiController
             
         }
         
+    }
+
+
+    /**
+     * 
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request){
+
+        $dato = $request->input('busqueda');
+
+        // where('state', true)->with('images', 'conditions', 'categories')->orderBy('created_at', 'desc')->get();
+
+        $publicaciones = Publication::with('images', 'conditions', 'categories')
+            ->where('title', 'like', '%'.$dato.'%')
+            ->where('state', '=', true)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return $this->showAll($publicaciones);
     }
 }

@@ -24,9 +24,14 @@ Route::middleware('auth:api')->get('/user', function(Request $request) {
 
 Route::group(['prefix' => '', 'middleware' => 'cors'], function () {
   Route::get('users/search', 'User\UserController@search');
+  Route::get('publications/search', 'Publication\PublicationController@search');
   Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]);
   Route::resource('publications', 'Publication\PublicationController', ['except' => ['create', 'edit']]);
   Route::resource('users.publications', 'User\UserPublicationController', ['only' => ['index']]);
+  Route::resource('users.loans', 'User\UserLoanController', ['only' => ['index']]);
+  Route::resource('users.loansHistoric', 'User\UserLoanHistoricController', ['only' => ['index']]);
+  Route::resource('users.requestionsSent', 'User\UserRequestionsSentController', ['only' => ['index']]);
+  Route::resource('users.requestionsReceived', 'User\UserRequestionsReceivedController', ['only' => ['index']]);
   Route::resource('images', 'Publication\ImageController', ['except' => ['create', 'edit']]);
   Route::resource('publications.images', 'Publication\PublicationImageController', ['only' => ['index']]);
   Route::resource('loans', 'Loan\LoanController', ['except' => ['create', 'edit']]);

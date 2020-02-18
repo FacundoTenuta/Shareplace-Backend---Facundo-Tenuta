@@ -64,12 +64,14 @@ class UserController extends ApiController
         $usuario->name = $request->name;
         $usuario->lastName = $request->lastName;
         $usuario->email = $request->email;
+        $usuario->phone = $request->phone;
         $usuario->password = bcrypt($request->password);
         $usuario->dni = $request->dni;
         $usuario->birthDate = $request->birthDate;
         $usuario->admin = false;
         $usuario->enabled = true;
         $usuario->description = $request->description;
+
 
         $usuario->save();
 
@@ -86,7 +88,7 @@ class UserController extends ApiController
     public function show($id)
     {
 
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($id)->fresh('links', 'abilities');
 
         return $this->showOne($user);
 
@@ -115,20 +117,39 @@ class UserController extends ApiController
     public function update(Request $request, $id)
     {
 
-        $usuario = User::findOrFail($id);
+        $usuario = User::findOrFail($id)->fresh('links', 'abilities');
 
         $reglas = [
-            'email' => 'email',
-            'password' => 'min:6|confirmed',
+            'name' => 'required',
+            'lastName' => 'required',
+            // 'password' => 'min:6|confirmed',
         ];
 
         $this->validate($request, $reglas);
 
         $usuario->name = $request->name;
         $usuario->lastName = $request->lastName;
-        $usuario->email = $request->email;
-        $usuario->password = $request->password;
-        $usuario->birthDate = $request->birthDate;
+
+        if($request->has('email')){
+            $usuario->email = $request->email;
+        }
+        // $usuario->email = $request->email;
+        if($request->has('phone')){
+            $usuario->phone = $request->phone;
+        }
+
+        if($request->has('description')){
+            $usuario->description = $request->description;
+        }
+
+        if($request->has('image')){
+            $usuario->image = $request->file('image')->store('', 'images');
+        }
+
+
+        // $usuario->phone = $request->phone;
+        // $usuario->password = $request->password;
+        // $usuario->birthDate = $request->birthDate;
 
         $usuario->save();
 

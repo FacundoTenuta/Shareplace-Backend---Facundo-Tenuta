@@ -14,9 +14,10 @@ $factory->define(Publication::class, function (Faker $faker) {
         'description' => $faker->text($maxNbChars = 30),
         
         'createDate' =>$date,
-        'state' => 'disponible',
+        'state' => true,
         //'user_id' => factory(User::class())->create()->id,
         'user_id' => User::all()->random()->id,
-        'principalImage' => $faker -> imageUrl($width = 640, $height = 480),
+        // 'principalImage' => $faker -> imageUrl($width = 640, $height = 480),
+        'principalImage' => 'FondoDePublicacion.jpg',
     ];
 });

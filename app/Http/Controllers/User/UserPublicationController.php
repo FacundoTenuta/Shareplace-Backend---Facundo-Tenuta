@@ -26,9 +26,11 @@ class UserPublicationController extends ApiController
      */
     public function index(User $user)
     {
-        $publications = $user->publications->fresh('images', 'conditions');
+        $publications = $user->publications->fresh('images', 'conditions', 'categories');
 
-        return $this->showAll($publications);
+        $aux = $publications->sortByDesc('created_at');
+
+        return $this->showAll($aux);
     }
 
     /**

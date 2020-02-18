@@ -19,7 +19,7 @@ class CreatePublicationsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->date('createDate');
-            $table->string('state');
+            $table->boolean('state');
             $table->unsignedBigInteger('user_id');
             $table->string('principalImage')->nullable()->default('FondoDePublicacion.jpg');
             

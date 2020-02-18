@@ -14,6 +14,7 @@ $factory->define(Image::class, function (Faker $faker) {
         'date' => $date,
         // 'publication_id' => factory(Publication::class())->create()->id,
         'publication_id' => Publication::all()->random()->id,
-        'path' => $faker -> imageUrl($width = 640, $height = 480),
+        // 'path' => $faker -> imageUrl($width = 640, $height = 480),
+        'path' => 'camara_principal.jpg',
     ];
 });

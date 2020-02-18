@@ -47,15 +47,30 @@ class RequestionController extends ApiController
      */
     public function store(Request $request)
     {
+
+        $reglas = [
+            'publication' => 'required',
+            'user' => 'required',
+            'reason' => 'required',
+            // 'images' => 'required',
+            // 'conditions' => 'required',
+        ];
+
+        $this->validate($request, $reglas);
+
+
         //
         $solicitud = new Requestion();
         $solicitud->title = $request->title;
+        // $solicitud->fromDate = $request->fromDate;
+        // $solicitud->untilDate = $request->untilDate;
+        $solicitud->reason = $request->reason;
+        $solicitud->active = true;
+        $solicitud->isLoan = false;
+        $solicitud->publication_id = $request->publication;
+        $solicitud->requester_id = $request->user;
         $solicitud->fromDate = $request->fromDate;
         $solicitud->untilDate = $request->untilDate;
-        $solicitud->reason = $request->reason;
-        $solicitud->state = 'activo';
-        $solicitud->publication_id = $request->publication_id;
-        $solicitud->requester_id = $request->requester_id;
 
         $solicitud->save();
 
