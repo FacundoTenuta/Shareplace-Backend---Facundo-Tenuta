@@ -34,7 +34,7 @@ Route::group(['prefix' => '', 'middleware' => 'cors'], function () {
   Route::resource('users.requestionsReceived', 'User\UserRequestionsReceivedController', ['only' => ['index']]);
   Route::resource('images', 'Publication\ImageController', ['except' => ['create', 'edit']]);
   Route::resource('publications.images', 'Publication\PublicationImageController', ['only' => ['index']]);
-  Route::resource('loans', 'Loan\LoanController', ['except' => ['create', 'edit']]);
+  Route::resource('loans', 'Requestion\LoanController', ['except' => ['create', 'edit']]);
   Route::resource('requestions', 'Requestion\RequestionController', ['except' => ['create', 'edit']]);
   Route::resource('conditions', 'Condition\ConditionController', ['except' => ['create', 'edit']]);
   Route::resource('publications.conditions', 'Publication\PublicationConditionController', ['only' => ['index']]);

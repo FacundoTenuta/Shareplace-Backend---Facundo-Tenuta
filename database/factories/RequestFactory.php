@@ -26,7 +26,7 @@ $factory->define(Requestion::class, function (Faker $faker) {
         'fromDate' => $date,
         'untilDate' => $date2,
         'active' => true,
-        'isLoan' => true,
+        'isLoan' => false,
         'startDate' => new Carbon(null),
         'endDate' => new Carbon(null),
         // 'publication_id' => factory(Publication::class())->create()->id;
