@@ -16,7 +16,7 @@ class UserLoanHistoricController extends ApiController
 
     public function __construct()
     {
-        //$this->middleware('jwt', ['except' => ['login']]);
+        $this->middleware('jwt', ['except' => ['login']]);
     }
 
 

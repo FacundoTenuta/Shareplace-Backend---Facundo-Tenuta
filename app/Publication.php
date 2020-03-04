@@ -7,9 +7,14 @@ use App\Condition;
 use App\Image;
 use App\Requestion;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Publication extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     Protected $fillable=[
     'title',
     'description',

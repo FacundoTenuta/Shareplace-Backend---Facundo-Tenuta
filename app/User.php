@@ -7,13 +7,14 @@ use App\Link;
 use App\Publication;
 use App\Requestion;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
 
     // Segun un profe de youtube indica que usar constantes de tipo string es mas eficiente que usar un tipo booleando en el atributo "enabled" y "admin", vemos si nos sirve en un futuro
 
@@ -22,6 +23,8 @@ class User extends Authenticatable implements JWTSubject
 
     // const USER_ADMIN = 'true';
     // const USER_REGULAR = 'false';
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
