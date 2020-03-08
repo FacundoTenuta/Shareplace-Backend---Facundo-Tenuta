@@ -15,8 +15,8 @@ class ConditionPublicationTable extends Migration
     public function up()
     {
         Schema::create('condition_publication', function (Blueprint $table) {
-            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            // $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            // $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->unsignedBigInteger('publication_id');
             $table->unsignedBigInteger('condition_id');
             
