@@ -115,7 +115,7 @@ class PublicationController extends ApiController
 
             $condition_ids = array();
 
-            if($request->has('images')){
+            if($request->has('conditions')){
 
                 $conditions = $request->conditions;
 
@@ -219,9 +219,15 @@ class PublicationController extends ApiController
                 }
             }
 
-            if($request->has('principalImage')){
-                $publication->principalImage = $request->file('principalImage')->store('', 'images');
+            if ($request->has('notPrincipalImage')) {
+                $publication->principalImage = 'FondoDePublicacion.jpg';
+            }else{
+                if($request->has('principalImage')){
+                    $publication->principalImage = $request->file('principalImage')->store('', 'images');
+                }
             }
+
+            
 
             $publication->save();
 
