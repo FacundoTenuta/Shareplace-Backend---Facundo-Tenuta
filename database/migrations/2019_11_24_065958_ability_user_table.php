@@ -15,8 +15,8 @@ class AbilityUserTable extends Migration
     public function up()
     {
         Schema::create('ability_user', function (Blueprint $table) {
-            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            // $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            // $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->unsignedBigInteger('ability_id');
             $table->unsignedBigInteger('user_id');
 
