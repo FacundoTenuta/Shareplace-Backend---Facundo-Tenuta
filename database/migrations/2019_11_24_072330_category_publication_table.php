@@ -15,8 +15,8 @@ class CategoryPublicationTable extends Migration
     public function up()
     {
         Schema::create('category_publication', function (Blueprint $table) {
-            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            // $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            // $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('publication_id');
 
